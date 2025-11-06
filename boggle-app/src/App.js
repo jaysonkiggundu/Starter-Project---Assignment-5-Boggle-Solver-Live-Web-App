@@ -65,31 +65,34 @@ function App() {
       .catch((error) => console.error("❌ Logout error:", error));
   }
 
-  // load solutions for the current grid
   useEffect(() => {
     setAllSolutions(game.solutions || []);
   }, [grid, game]);
 
-  // start random (non-challenge) game
+  // 🧩 start NEW random game (resets challenge state)
   useEffect(() => {
-    if (gameState === GAME_STATE.IN_PROGRESS && !game.isChallenge) {
-      const g = myMap.get(size.toString());
-      const normalized = g.solutions.map((w) => w.trim().toUpperCase());
-      setGame({ ...g, solutions: normalized });
-      setGrid(g.grid);
-      setAllSolutions(normalized);
-      setFoundSolutions([]);
+    if (gameState === GAME_STATE.IN_PROGRESS) {
+      // If not currently in a challenge, start normal random grid
+      if (!game.isChallenge) {
+        const g = myMap.get(size.toString());
+        const normalized = g.solutions.map((w) => w.trim().toUpperCase());
+        setGame({ ...g, solutions: normalized, isChallenge: false });
+        setGrid(g.grid);
+        setAllSolutions(normalized);
+        setFoundSolutions([]);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState, size, myMap]);
 
-  // reset if size changes before starting
+  // 🧩 reset everything if size changes before a new game
   useEffect(() => {
     if (size !== prevSizeRef.current) {
       if (gameState === GAME_STATE.BEFORE) {
         setFoundSolutions([]);
         setAllSolutions([]);
         setGrid([]);
+        setGame({}); // ✅ fully clear previous challenge
       }
       prevSizeRef.current = size;
     }
@@ -172,10 +175,12 @@ function App() {
     }
   }
 
+  // 🧩 Auto-save challenge scores
   useEffect(() => {
     if (gameState === GAME_STATE.ENDED && game.isChallenge && user) {
       const score = foundSolutions.length;
       saveScoreToFirestore(score);
+      setGame((prev) => ({ ...prev, isChallenge: false })); // ✅ exit challenge mode
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState]);
@@ -184,7 +189,6 @@ function App() {
     <div className="App">
       <img src={logo} width="25%" height="25%" className="logo" alt="Bison Boggle Logo" />
 
-      {/* Google Sign-in / Sign-out button only */}
       {user ? (
         <button onClick={handleLogout}>Sign Out</button>
       ) : (
