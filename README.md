@@ -1,3 +1,5 @@
+Web Link To Solver: https://boggle-e2e28.web.app
+
 ### What is this?
 This `README.md` file is auto-created for all new projects.
 
