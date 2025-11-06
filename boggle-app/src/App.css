@@ -1,0 +1,98 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background: #f9fafb;
+  color: #282c34;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+}
+
+.logo {
+  width: 25%;
+  margin: 20px auto 10px auto;
+  display: block;
+}
+
+/* 🔝 Group for sign-in and game controls */
+.top-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px; /* space between sign-in and start-game */
+  margin-bottom: 40px; /* space below section */
+}
+
+/* 🔐 Auth styles */
+.auth-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-box button {
+  background-color: #4285f4;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95rem;
+  min-width: 180px;
+}
+
+.auth-box button:hover {
+  background-color: #3367d6;
+}
+
+/* 🎮 Game controls */
+.controls-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 🔥 Challenges list */
+.challenges-section {
+  margin-top: 20px;
+}
+
+.challenges-section h3 {
+  margin-top: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin: 8px 0;
+}
+
+li button {
+  background-color: #61dafb;
+  border: none;
+  color: #000;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+li button:hover {
+  background-color: #21a1f1;
+}
+button {
+  position: relative;
+  z-index: 10; /* keeps button on top of overlapping elements */
+}
+
+.logo {
+  pointer-events: none; /* ensures the logo image never blocks clicks */
+}
